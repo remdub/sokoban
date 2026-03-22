@@ -1,0 +1,9 @@
+__pycache__
+bin
+lib
+lib64
+students/*.json
+*.exe
+dist_win
+build/work_win
+pyvenv.cfg

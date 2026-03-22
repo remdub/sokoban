@@ -1,0 +1,109 @@
+; Sasquatch levels by David W. Skinner
+
+;title: Sasquatch 1
+;optimal: 42
+ #######
+ #  @  #
+ #     #
+## $$ ##
+#  ..  #
+#      #
+########
+
+;title: Sasquatch 2
+;optimal: 38
+ #####
+##   ##
+# $   #
+#. @ .#
+# $   #
+##   ##
+ #####
+
+;title: Sasquatch 3
+;optimal: 67
+########
+#  @   #
+#  $   #
+# $## ##
+## #.  #
+ # #.$ #
+ #   . #
+ #######
+
+;title: Sasquatch 4
+;optimal: 58
+ ####
+## .#
+#   ##
+# $  #
+##$. #
+ # @ #
+ #####
+
+;title: Sasquatch 5
+;optimal: 36
+######
+#    ##
+# $   #
+# . $ #
+## .$ #
+ # @###
+ ###
+
+;title: Sasquatch 6
+;optimal: 80
+  ######
+  #    #
+  #    #
+  ##$$ #
+####.  #
+#   .$ #
+#  @####
+#####
+
+;title: Sasquatch 7
+;optimal: 44
+#####
+#   ##
+# $  ##
+# $   #
+## . .#
+ # @###
+ ###
+
+;title: Sasquatch 8
+;optimal: 65
+#######
+#     #
+# .$. #
+#.$.$##
+## $ #
+ # . #
+ #@###
+ ###
+
+;title: Sasquatch 9
+;optimal: 50
+#######
+#  @  #
+# $ $ #
+#  $  #
+## # ##
+ #. .#
+ #   #
+ #####
+
+;title: Sasquatch 10
+;optimal: 72
+  ####
+  #  #
+  #$ #
+  ## ##
+  #   #
+ ## $ ##
+## .$. ##
+#  $ .  #
+#   @   #
+#########
+

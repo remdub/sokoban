@@ -1,0 +1,62 @@
+;title: First Push
+;optimal: 1
+#####
+#@$.#
+#####
+
+;title: Keep Going
+;optimal: 4
+########
+#@$   .#
+########
+
+;title: Look Up
+;optimal: 1
+#####
+# . #
+# $ #
+# @ #
+#####
+
+;title: Go Around
+;optimal: 3
+########
+#.     #
+#$     #
+#  @   #
+########
+
+;title: Turn the Corner
+;optimal: 5
+#######
+#.    #
+#     #
+# $   #
+# @   #
+#######
+
+;title: Side by Side
+;optimal: 6
+########
+# . .  #
+# $ $  #
+#  @   #
+########
+
+;title: Staircase
+;optimal: 10
+#########
+# .  .  #
+# $     #
+#    $  #
+#  @    #
+#########
+
+;title: Double Push
+;optimal: 9
+########
+# ..   #
+#      #
+# $$   #
+#   @  #
+########
