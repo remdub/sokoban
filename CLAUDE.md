@@ -17,6 +17,26 @@ Run:
 bin/python main.py
 ```
 
+## Building for Windows (from Linux/Ubuntu)
+
+The build script `build/build_windows.sh` cross-compiles a standalone Windows executable using Wine + PyInstaller. No Python is required on the target machine.
+
+**Prerequisites:**
+- `wine` (`sudo apt install wine`)
+- `python-3.8.20.exe` — Windows Python 3.8 installer, downloaded into the repo root (or pass the path as argument)
+
+**Build:**
+```bash
+bash build/build_windows.sh
+# or: bash build/build_windows.sh /path/to/python-3.8.20.exe
+```
+
+The script installs Python 3.8 under Wine, then installs `pygame-ce==2.1.4` and `pyinstaller==5.13.2`, and runs PyInstaller with `build/sokoban.spec`.
+
+**Output:** `dist_win/sokoban/` — a self-contained folder (one-dir PyInstaller build bundling `assets/` and `levels/`).
+
+**Distribution:** copy the entire `dist_win/sokoban/` folder to the target Windows PC and launch `sokoban.exe`. The `students/` subfolder and `save.json` are created at runtime next to the exe, so the folder must be writable.
+
 ## Architecture
 
 ### Display model

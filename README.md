@@ -129,6 +129,37 @@ score_niveau = mouvements_pts + tentatives_pts + rapidité_pts − pénalité_an
 
 Le maximum théorique est de **2000 × N pts** (N = nombre de niveaux du pack).
 
+## Distribution Windows (construction de l'exécutable)
+
+Le script `build/build_windows.sh` génère un exécutable Windows autonome via Wine + PyInstaller.
+**Aucun Python n'est nécessaire sur le PC cible.**
+
+### Pré-requis (sur la machine Linux/Ubuntu)
+
+- `wine` : `sudo apt install wine`
+- `python-3.8.20.exe` — installateur Python 3.8 pour Windows, à télécharger et placer à la racine du dépôt (ou passer le chemin en argument)
+
+### Construction
+
+```bash
+bash build/build_windows.sh
+# ou : bash build/build_windows.sh /chemin/vers/python-3.8.20.exe
+```
+
+Le script installe Python 3.8 sous Wine, puis `pygame-ce` et `pyinstaller`, et produit l'exécutable via `build/sokoban.spec`.
+
+### Résultat
+
+Le dossier `dist_win/sokoban/` contient l'application complète (exe + DLL + niveaux + assets).
+
+### Installation sur le PC Windows cible
+
+Copier **l'intégralité du dossier** `dist_win/sokoban/` sur le PC cible, puis lancer `sokoban.exe`.
+
+> Les données de progression (`save.json`) et les fichiers élèves (`students/`) sont créés automatiquement à côté de l'exécutable au premier lancement — le dossier doit donc être accessible en écriture.
+
+---
+
 ## Licence
 
 Ce projet est distribué sous licence [GNU GPL v3](LICENSE).
