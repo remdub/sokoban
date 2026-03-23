@@ -1,0 +1,51 @@
+name: Build Windows & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Wine and zip
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install -y wine wine32 wine64 zip xvfb
+
+      - name: Cache Python 3.8 Windows installer
+        id: cache-python-installer
+        uses: actions/cache@v4
+        with:
+          path: python-3.8.10.exe
+          key: python-3.8.10-windows-installer
+
+      - name: Download Python 3.8 Windows installer
+        if: steps.cache-python-installer.outputs.cache-hit != 'true'
+        run: curl -L -o python-3.8.10.exe https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
+
+      - name: Build Windows executable
+        run: WINEDEBUG=-all xvfb-run bash build/build_windows.sh "$GITHUB_WORKSPACE/python-3.8.10.exe"
+
+      - name: Zip artifact
+        run: cd dist_win && zip -r ../sokoban_win.zip sokoban/
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --title "${{ github.ref_name }}" \
+            --generate-notes \
+            sokoban_win.zip
