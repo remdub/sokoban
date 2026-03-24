@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import base64
 import math
+import os
+from datetime import datetime
 from typing import Dict, List, Optional
 
 import pygame
@@ -668,6 +670,7 @@ class TeacherHomeScreen:
     ITEMS = [
         ("GESTION DES ÉLÈVES",       "students"),
         ("STATS CLASSE TOURNOI",     "classe"),
+        ("EXPORTER STATS TOURNOI",   "export"),
         ("OPTIONS",                  "options"),
     ]
 
@@ -718,7 +721,9 @@ class TeacherMenu:
         self._tournoi_detail:  Optional[TeacherTournoiDetailScreen]     = None
         self._classe_pack:     Optional[TeacherTournoiClassePackScreen] = None
         self._classe_stats:    Optional[TeacherTournoiClasseScreen]     = None
-        self._mode    = 'home'
+        self._mode          = 'home'
+        self._export_msg:   str = ''
+        self._export_timer: int = 0
 
     def refresh(self) -> None:
         self._list.refresh()
@@ -741,6 +746,16 @@ class TeacherMenu:
                 self._mode = 'list'
             elif action == 'options':
                 return {'action': 'options'}
+            elif action == 'export':
+                ts   = datetime.now().strftime('%Y%m%d_%H%M%S')
+                path = os.path.join(os.path.dirname(settings.STUDENTS_DIR),
+                                    f"export_{ts}.csv")
+                n = student.export_tournament_csv(path)
+                if n:
+                    self._export_msg = f"Exporté: export_{ts}.csv ({n} lignes)"
+                else:
+                    self._export_msg = "Aucune donnée à exporter"
+                self._export_timer = 180
             elif action == 'classe':
                 self._classe_pack = TeacherTournoiClassePackScreen()
                 self._mode        = 'classe_pack'
@@ -824,3 +839,7 @@ class TeacherMenu:
             self._classe_pack.draw(surf, font, scale)
         elif self._mode == 'classe_stats' and self._classe_stats:
             self._classe_stats.draw(surf, font, scale)
+        if self._export_timer > 0:
+            _draw_centered(surf, font, self._export_msg, _CARD_SELECT,
+                           settings.LOGICAL_W // 2, settings.LOGICAL_H - 10, scale)
+            self._export_timer -= 1

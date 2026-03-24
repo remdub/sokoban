@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import base64
+import csv
 import hashlib
 import hmac
 import json
@@ -175,3 +176,44 @@ def save_tournament(name: str, pack: str, level_scores: list,
                 return
     tournaments.append(record)
     _save_profile(profile)
+
+
+def export_tournament_csv(filepath: str) -> int:
+    """Write all students' tournament data to a flat CSV file.
+
+    One row per (student × tournament × level).
+    Returns the number of data rows written (0 = no data, file not created).
+    Uses utf-8-sig so Excel on Windows opens it with correct French accents.
+    """
+    fieldnames = ['Élève', 'Pack', 'Date', 'Complété', 'Score Total',
+                  'Niveau', 'Score', 'Mouvements', 'Essais', 'Temps (s)',
+                  'Annulations']
+    rows: list = []
+    for name in list_students():
+        for t in get_tournaments(name):
+            ts        = t.get('timestamp', '')
+            pack      = t.get('pack', '')
+            completed = 'Oui' if t.get('completed', True) else 'Non'
+            total     = t.get('total_score', 0)
+            for lv in t.get('levels', []):
+                rows.append({
+                    'Élève':       name,
+                    'Pack':        pack,
+                    'Date':        ts,
+                    'Complété':    completed,
+                    'Score Total': total,
+                    'Niveau':      lv.get('level_idx', 0) + 1,
+                    'Score':       lv.get('score', 0),
+                    'Mouvements':  lv.get('moves', 0),
+                    'Essais':      lv.get('attempts', 1),
+                    'Temps (s)':   lv.get('time', 0.0),
+                    'Annulations': lv.get('undos', 0),
+                })
+    if not rows:
+        return 0
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    with open(filepath, 'w', newline='', encoding='utf-8-sig') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+    return len(rows)

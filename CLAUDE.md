@@ -79,10 +79,12 @@ Internal state machine with modes:
 home → list → student_submenu → detail (replay attempt list)
                               → tournoi_list → tournoi_detail
 home → classe_pack → classe_stats
+home → export (immediate CSV write, no sub-screen)
 ```
 From the home screen:
 - **GESTION DES ÉLÈVES** → student list → per-student submenu with two choices: "REPLAY DES PARTIES" (attempt history with replay) and "STATS DES TOURNOIS" (per-student tournament history with per-level breakdown).
 - **STATS CLASSE TOURNOI** → pack picker → class stats screen with two toggled views (LEFT/RIGHT): student leaderboard ranked by best score, and per-level averages across the class.
+- **EXPORTER STATS TOURNOI** → immediately writes `export_YYYYMMDD_HHMMSS.csv` to the game root directory. Flat CSV (one row per student × tournament × level) covering all students and all packs. Columns: Élève, Pack, Date, Complété, Score Total, Niveau, Score, Mouvements, Essais, Temps (s), Annulations. Confirmation message shown on screen for ~3 s.
 
 ### Move serialisation
 Every move is appended to `self._move_log` as a single character (`U`/`D`/`L`/`R`); undo/redo are logged as `Z`/`Y`. Saved with student attempts. `replay.py` drives playback by replaying these characters through the same `_do_move` path.

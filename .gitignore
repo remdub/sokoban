@@ -7,3 +7,4 @@ students/*.json
 dist_win
 build/work_win
 pyvenv.cfg
+*.csv

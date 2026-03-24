@@ -51,6 +51,7 @@ Accessible depuis l'écran de connexion professeur (code PIN requis).
 - **Stats classe tournoi** — sélectionner un pack pour afficher :
   - *Classement* : tous les élèves classés par meilleur score de tournoi
   - *Par niveau* : moyennes de la classe (score, nombre d'essais, temps) pour chaque niveau
+- **Exporter stats tournoi** — génère un fichier `export_YYYYMMDD_HHMMSS.csv` dans le dossier du jeu contenant toutes les données de tournoi (tous les élèves, tous les packs). Une ligne par élève × tournoi × niveau, avec les colonnes : Élève, Pack, Date, Complété, Score Total, Niveau, Score, Mouvements, Essais, Temps (s), Annulations. Le fichier s'ouvre directement dans Excel ou LibreOffice Calc.
 
 ## Packs de niveaux
 
