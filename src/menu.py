@@ -974,7 +974,7 @@ class TournoiIntroScreen:
             "Tu peux annuler ton dernier mouvement en appuyant sur la touche U.",
             "",
             "Chaque niveau terminé te donne accès au suivant",
-            "Il y a 10 niveaux au total",
+            "Il y a 20 niveaux au total",
             "",
             "Ton score dépendra de plusieurs critères :",
             "  - le nombre d'essais",
