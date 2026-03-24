@@ -111,7 +111,7 @@ TOURNOI_MOVES_MAX    = 1000
 TOURNOI_ATTEMPTS_MAX = 500
 TOURNOI_ATTEMPTS_PEN = 100   # deducted per extra attempt
 TOURNOI_TIME_MAX     = 500   # deducted 1 pt per second
-TOURNOI_UNDO_PEN     = 1     # deducted per undo move
+TOURNOI_UNDO_PEN     = 5     # deducted per undo move
 
 # ── CRT Effect ────────────────────────────────────────────────────────────────
 CRT_SCANLINE_ALPHA  = 60   # 0-255 darkness of scanlines

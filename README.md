@@ -109,13 +109,13 @@ points = max(0, 500 - int(secondes))
 - Chaque seconde écoulée retire 1 pt
 - Au-delà de 500 s → **0 pts**
 
-### 4. Pénalité d'annulations — −1 pt par annulation
+### 4. Pénalité d'annulations — −5 pts par annulation
 
 ```
-pénalité = annulations × 1
+pénalité = annulations × 5
 ```
 
-Chaque annulation (touche Undo) retire **1 point** du score total du niveau. Il n'y a pas de plafond.
+Chaque annulation (touche Undo) retire **5 points** du score total du niveau. Il n'y a pas de plafond.
 
 ### Score total
 

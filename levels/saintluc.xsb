@@ -105,15 +105,6 @@
 #  @  #
 #######
 
-;title: microban III #2
-;optimal: 48
-  ####
-###  #
-# $.@##
-#  *  #
-#  *  #
-#######
-
 ;title: Arranged #1
 ;optimal: 40
    ####
@@ -128,6 +119,15 @@
 ####$#
    #@#
    ###
+
+;title: microban III #2
+;optimal: 48
+  ####
+###  #
+# $.@##
+#  *  #
+#  *  #
+#######
 
 ;title: microban #66
 ;optimal: 69

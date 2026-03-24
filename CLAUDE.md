@@ -104,7 +104,7 @@ Tournament scoring (`savegame.compute_tournoi_level_score`, max 2000 pts):
 - **Moves** (1000 pts): `optimal/actual × 1000`
 - **Attempts** (500 pts): `500 − 100×(attempts−1)`, floored at 0
 - **Time** (500 pts): `500 − elapsed_seconds`, floored at 0
-- **Undo penalty**: −1 pt per undo (Z code in move_log); total floored at 0
+- **Undo penalty**: −5 pts per undo (Z code in move_log); total floored at 0
 
 ### Save data
 - `save.json` — game progress, unlock state, high scores, volume. Keys: `version`, `sfx_volume`, `music_volume`, `crt_enabled`, `fullscreen`, `current_pack`, `current_level`.

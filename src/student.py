@@ -153,14 +153,25 @@ def get_score(name: str, pack_name: str, level_index: int) -> dict:
 
 
 def save_tournament(name: str, pack: str, level_scores: list,
-                    total_score: int) -> None:
+                    total_score: int, session_ts: str = '',
+                    completed: bool = True) -> None:
     os.makedirs(settings.STUDENTS_DIR, exist_ok=True)
     profile = load_profile(name)
     profile["name"] = name
-    profile.setdefault("tournaments", []).append({
-        "timestamp":   datetime.now().isoformat(timespec='seconds'),
+    tournaments = profile.setdefault("tournaments", [])
+    record = {
+        "timestamp":   session_ts or datetime.now().isoformat(timespec='seconds'),
         "pack":        pack,
         "total_score": total_score,
         "levels":      level_scores,
-    })
+        "completed":   completed,
+    }
+    # Upsert: update existing record for this session, or append a new one
+    if session_ts:
+        for i, t in enumerate(tournaments):
+            if t.get("timestamp") == session_ts:
+                tournaments[i] = record
+                _save_profile(profile)
+                return
+    tournaments.append(record)
     _save_profile(profile)

@@ -8,6 +8,7 @@ from __future__ import annotations
 import os
 import sys
 import time
+from datetime import datetime
 
 import pygame
 
@@ -125,12 +126,13 @@ class Game:
         self._win_stars   = 0
 
         # Tournoi session
-        self._tournoi_mode:    bool      = False
-        self._tournoi_pack:    int       = 0
-        self._tournoi_attempt: int       = 1
-        self._tournoi_scores:  list      = []
+        self._tournoi_mode:       bool      = False
+        self._tournoi_pack:       int       = 0
+        self._tournoi_attempt:    int       = 1
+        self._tournoi_scores:     list      = []
+        self._tournoi_session_ts: str       = ''
         self._win_tournoi_score: int | None = None
-        self._pending_tournoi_pack: int  = 0
+        self._pending_tournoi_pack: int     = 0
         self.tournoi_intro_screen: TournoiIntroScreen | None = None
 
         # Student / teacher / replay
@@ -282,11 +284,12 @@ class Game:
         self.state = GameState.TOURNOI_INTRO
 
     def _enter_tournoi(self, pack_idx: int) -> None:
-        self._tournoi_mode    = True
-        self._tournoi_pack    = pack_idx
-        self._tournoi_attempt = 1
-        self._tournoi_scores  = []
-        self._win_tournoi_score = None
+        self._tournoi_mode       = True
+        self._tournoi_pack       = pack_idx
+        self._tournoi_attempt    = 1
+        self._tournoi_scores     = []
+        self._tournoi_session_ts = datetime.now().isoformat(timespec='seconds')
+        self._win_tournoi_score  = None
         self._enter_playing(pack_idx, 0)
 
     def _enter_tournoi_end(self) -> None:
@@ -294,7 +297,9 @@ class Game:
         total = sum(s['score'] for s in self._tournoi_scores)
         if self.student_name:
             student.save_tournament(self.student_name, pack_name,
-                                    self._tournoi_scores, total)
+                                    self._tournoi_scores, total,
+                                    session_ts=self._tournoi_session_ts,
+                                    completed=True)
         self.tournoi_end_screen = TournoiEndScreen(
             pack_name, self._tournoi_scores, total)
         self._tournoi_mode = False
@@ -725,6 +730,14 @@ class Game:
                 'time':      round(elapsed, 1),
                 'undos':     undos,
             })
+            # Save progress after each level so partial runs are persisted
+            if self.student_name:
+                partial_total = sum(s['score'] for s in self._tournoi_scores)
+                student.save_tournament(
+                    self.student_name, pack_name,
+                    self._tournoi_scores, partial_total,
+                    session_ts=self._tournoi_session_ts,
+                    completed=False)
             self._win_tournoi_score = ts
             self.win_screen.reset(tournoi_score=ts)
         else:
